@@ -1,0 +1,148 @@
+@import url('reset.css');
+:root {
+    font-size: 62.5%;
+    --bright-blue: hsl(220, 98%, 61%);
+    --very-dark-grey: hsl(235, 21%, 11%);
+    --very-dark-desaturated-blue: hsl(235, 24%, 19%);
+    --light-greish-blue: hsl(234, 39%, 85%);
+    --dark-greish-blue: hsl(234, 11%, 52%);
+    --very-dark-greyish-blue: hsl(233, 14%, 35%);
+    --gradient: linear-gradient(#e27b26, #d4a113);
+    --border-radius: .5rem;
+}
+
+body {
+    background-color: var(--very-dark-grey);
+}
+
+.main-container {
+    margin: 0 auto;
+    width: 80%;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 100px;
+}
+
+header span {
+    font-size: 4rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5rem;
+    color: #FFF;
+    font-weight: 700;
+}
+
+
+.todo-create {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.todo-create input {
+    background-color: inherit;
+    border: none;
+    width: 100%;
+    height: 4rem;
+    caret-color: var(--light-greish-blue);
+    color: var(--light-greish-blue);
+}
+
+.todo-create input:focus::placeholder {
+    color: var(--light-greish-blue);
+}
+
+.todo-create input:focus {
+    outline: none;
+    box-shadow: inset 0 -1px 0 var(--light-greish-blue);
+}
+
+.todo-create, .task, .todo-bottom-box, footer {
+    padding: 0 2rem;
+    height: 80px;
+    background-color: var(--very-dark-desaturated-blue);
+}
+
+.todo-create, footer {
+    border-radius: var( --border-radius);
+}
+
+
+.todos>ul> :first-child {
+    border-top-left-radius: var( --border-radius);
+    border-top-right-radius: var( --border-radius);
+}
+
+.task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: solid 1px var(--very-dark-greyish-blue);
+}
+
+.task span {
+    color: var(--light-greish-blue);
+    width: 80%;
+}
+
+.remove-task, .state-switch, button {
+    cursor: pointer;
+}
+
+.task[state='completed'] span {
+    text-decoration: line-through;
+    color: var(--dark-greish-blue);
+}
+
+.task[state='completed'] .state-switch {
+    background: center url('resources/icon-check.svg') no-repeat, var(--gradient);
+}
+
+.state-switch {
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 1px solid var(--dark-greish-blue);
+}
+
+.todo-bottom-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.todo-bottom-box, .todo-bottom-box button {
+    font-size: 1.5rem;
+}
+
+button {
+    background-color: inherit;
+    border: none;
+}
+
+button:hover {
+    color: var(--bright-blue);
+}
+
+button, .todo-create input, body {
+    font-size: 1.8rem;
+    font-family: 'Josefin Sans', sans-serif;
+    color: var(--dark-greish-blue);
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem
+}

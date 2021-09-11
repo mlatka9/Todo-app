@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div class='main-container'>
+        <header>
+            <span>doto</span>
+            <button type='button'><img src='resources/icon-sun.svg'></button>
+        </header>
+        <div class='todo-create'>
+            <input type='text' placeholder='Create a new doto...'>
+        </div>
+        <section>
+            <div class='todos'>
+                <ul>
+                    <li class='task' state='active'>
+                        <div class='state-switch'></div>
+                        <span>Zadanie praktyczne z frontend mentor</span>
+                        <img class='remove-task' src='resources/icon-cross.svg'>
+                    </li>
+                    <li class='task' state='completed'>
+                        <div class='state-switch'>
+
+                        </div>
+                        <span>Kurs animacji na javascript.info</span>
+                        <img class='remove-task' src='resources/icon-cross.svg'>
+                    </li>
+                </ul>
+            </div>
+            <div class='todo-bottom-box'>
+                <span>5 items left</span>
+                <button type='button'>Clear Completed</button>
+            </div>
+        </section>
+        <footer>
+            <button type='button'>All</button>
+            <button type='button'>Active</button>
+            <button type='button'>Completed</button>
+        </footer>
+    </div>
+
+    <script src='script.js'></script>
+
+</body>
+
+</html>
