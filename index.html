@@ -10,46 +10,51 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
 
+    <script src="https://kit.fontawesome.com/7e85283d50.js" crossorigin="anonymous"></script>
+
     <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
 
 <body>
+    <div class='banner'></div>
 
     <div class='main-container'>
         <header>
             <span>doto</span>
-            <button type='button'><img src='resources/icon-sun.svg'></button>
+            <button type='button'><i class="fas fa-sun"></i></button>
         </header>
         <div class='todo-create'>
-            <input type='text' placeholder='Create a new doto...'>
+            <form>
+                <input type='text' placeholder='Create a new doto...'>
+            </form>
         </div>
         <section>
             <div class='todos'>
                 <ul>
-                    <li class='task' state='active'>
+                    <!-- <li class='task' state='active'>
                         <div class='state-switch'></div>
                         <span>Zadanie praktyczne z frontend mentor</span>
-                        <img class='remove-task' src='resources/icon-cross.svg'>
+                        <div class='remove-task'>
                     </li>
                     <li class='task' state='completed'>
                         <div class='state-switch'>
 
                         </div>
                         <span>Kurs animacji na javascript.info</span>
-                        <img class='remove-task' src='resources/icon-cross.svg'>
-                    </li>
+                        <div class='remove-task'>
+                    </li> -->
                 </ul>
             </div>
             <div class='todo-bottom-box'>
-                <span>5 items left</span>
-                <button type='button'>Clear Completed</button>
+                <span>0 items left</span>
+                <button type='button' class='clear-completed'>Clear Completed</button>
             </div>
         </section>
         <footer>
-            <button type='button'>All</button>
-            <button type='button'>Active</button>
-            <button type='button'>Completed</button>
+            <button type='button' id='show-all'>All</button>
+            <button type='button' id='show-active'>Active</button>
+            <button type='button' id='show-completed'>Completed</button>
         </footer>
     </div>
 

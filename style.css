@@ -1,18 +1,28 @@
 @import url('reset.css');
 :root {
     font-size: 62.5%;
-    --bright-blue: hsl(220, 98%, 61%);
+    --border-radius: .5rem;
+    --bright-yellow: hsl(46, 98%, 57%);
     --very-dark-grey: hsl(235, 21%, 11%);
     --very-dark-desaturated-blue: hsl(235, 24%, 19%);
     --light-greish-blue: hsl(234, 39%, 85%);
     --dark-greish-blue: hsl(234, 11%, 52%);
     --very-dark-greyish-blue: hsl(233, 14%, 35%);
-    --gradient: linear-gradient(#e27b26, #d4a113);
-    --border-radius: .5rem;
+    --banner-gradient-top: rgba(253, 199, 3, 0.637);
+    --banner-gradient-bottom: rgba(253, 212, 62, 0.637);
 }
 
 body {
     background-color: var(--very-dark-grey);
+}
+
+.banner {
+    width: 100%;
+    height: 250px;
+    background: linear-gradient(0deg, var(--banner-gradient-top) 0%, var(--banner-gradient-bottom) 100%), url('resources/background.png') center no-repeat;
+    background-size: calc(max(1350px, 100vw));
+    position: absolute;
+    z-index: -10;
 }
 
 .main-container {
@@ -31,6 +41,10 @@ header {
     height: 100px;
 }
 
+header span, header i {
+    text-shadow: 0 0 3rem rgba(204, 184, 54, 0.74);
+}
+
 header span {
     font-size: 4rem;
     text-transform: uppercase;
@@ -39,14 +53,19 @@ header span {
     font-weight: 700;
 }
 
+header i {
+    color: #FFF;
+    font-size: 3rem;
+}
 
-.todo-create {
+.todo-create form {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100%;
 }
 
-.todo-create input {
+.todo-create form input {
     background-color: inherit;
     border: none;
     width: 100%;
@@ -55,16 +74,20 @@ header span {
     color: var(--light-greish-blue);
 }
 
+.todo-create input::placeholder {
+    color: var(--dark-greish-blue);
+}
+
 .todo-create input:focus::placeholder {
-    color: var(--light-greish-blue);
+    color: transparent;
 }
 
 .todo-create input:focus {
     outline: none;
-    box-shadow: inset 0 -1px 0 var(--light-greish-blue);
+    box-shadow: inset 0 -1px 0 var(--bright-yellow);
 }
 
-.todo-create, .task, .todo-bottom-box, footer {
+.todo-create, .todo-bottom-box, footer {
     padding: 0 2rem;
     height: 80px;
     background-color: var(--very-dark-desaturated-blue);
@@ -74,13 +97,15 @@ header span {
     border-radius: var( --border-radius);
 }
 
-
 .todos>ul> :first-child {
     border-top-left-radius: var( --border-radius);
     border-top-right-radius: var( --border-radius);
 }
 
 .task {
+    padding: 2rem;
+    min-height: 80px;
+    background-color: var(--very-dark-desaturated-blue);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -90,24 +115,33 @@ header span {
 .task span {
     color: var(--light-greish-blue);
     width: 80%;
+    overflow: hidden;
+    line-height: 2.5rem;
 }
 
-.remove-task, .state-switch, button {
+.remove-task, .state-switch, button, header i {
     cursor: pointer;
 }
 
-.task[state='completed'] span {
+.remove-task, .state-switch {
+    width: 25px;
+    height: 25px;
+}
+
+.remove-task {
+    background: center url('resources/icon-cross.svg') no-repeat;
+}
+
+.task[data-state='completed'] span {
     text-decoration: line-through;
     color: var(--dark-greish-blue);
 }
 
-.task[state='completed'] .state-switch {
-    background: center url('resources/icon-check.svg') no-repeat, var(--gradient);
+.task[data-state='completed'] .state-switch {
+    background: center url('resources/icon-check.svg') no-repeat, var(--bright-yellow);
 }
 
 .state-switch {
-    width: 25px;
-    height: 25px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -131,7 +165,7 @@ button {
 }
 
 button:hover {
-    color: var(--bright-blue);
+    color: var(--bright-yellow);
 }
 
 button, .todo-create input, body {
@@ -145,4 +179,20 @@ footer {
     justify-content: center;
     align-items: center;
     gap: 3rem
+}
+
+@media (max-width: 500px) {
+    .task, .todo-create, .todo-bottom-box {
+        padding: 1rem;
+    }
+    .task span {
+        font-size: 1.5rem;
+    }
+    .remove-task, .state-switch {
+        width: 20px;
+        height: 20px;
+    }
+    header, footer {
+        overflow: hidden;
+    }
 }
