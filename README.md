@@ -22,7 +22,7 @@ Users is able to:
 
 ### Screenshots
 
-![Layout](https://user-images.githubusercontent.com/72691985/132992261-ebcb0027-6255-4c56-9035-86f2877d216a.PNG)
+![Layout](https://user-images.githubusercontent.com/72691985/132997617-7112fd94-d02f-4bba-8039-34fef67f920d.PNG)
 
 ### Built with
 
