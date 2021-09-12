@@ -1,7 +1,45 @@
-let form = document.querySelector('.todo-create form');
 let todosBox = document.querySelector('.todos ul');
-
+let form = document.querySelector('.todo-create form');
 let todoList = [];
+
+retriveData();
+
+function turnOnAnimations(){
+    document.body.classList.remove('no-animation');
+}
+
+let draggableIndex;
+function makeDraggable(dragItem) {
+
+    dragItem.ondragstart = function () {
+        draggableIndex = todoList.indexOf(this);
+    }
+
+    dragItem.ondragenter = function () {
+        this.classList.add('drag-over');
+    }
+
+    dragItem.ondragleave = function (event) {
+        if (event.relatedTarget === null) {
+            this.classList.remove('drag-over');
+            return;
+        }
+        if (event.relatedTarget.closest('li') === this) return;
+        this.classList.remove('drag-over');
+    }
+
+    dragItem.ondragover = function (event) {
+        event.preventDefault();
+    }
+
+    dragItem.ondrop = function () {
+        this.classList.remove('drag-over');
+        let droppableIndex = todoList.indexOf(this);
+        [todoList[droppableIndex], todoList[draggableIndex]] = [todoList[draggableIndex], todoList[droppableIndex]]
+        todosBox.append(...todoList);
+        save()
+    }
+}
 
 form.addEventListener('submit', function (event) {
     event.preventDefault();
@@ -14,6 +52,7 @@ form.addEventListener('submit', function (event) {
 });
 
 function createNewTodo(message, state) {
+
     let li = document.createElement('li');
     li.setAttribute('draggable', 'true');
     li.className = 'task';
@@ -26,11 +65,15 @@ function createNewTodo(message, state) {
     let divRemove = document.createElement('div');
     divRemove.className = 'remove-task';
 
+    li.classList.add('add-animation');
+    setTimeout(()=>li.classList.remove('add-animation'),1000);
     li.append(divSwitch, spanMessage, divRemove);
-    todoList.push(li);
-    todosBox.append(li);
+    todoList.unshift(li);
+    todosBox.prepend(li);
 
+    makeDraggable(li);
     updateCounter();
+    save();
 }
 
 todosBox.addEventListener('click', function (event) {
@@ -48,13 +91,19 @@ function changeState(todo) {
     } else {
         todo.dataset.state = 'active';
     }
+    save();
 }
 
 function removeTodo(todo) {
     let indexToRemove = todoList.indexOf(todo);
-    todo.remove();
+    console.log(todo)
+    todo.classList.add('remove-amination');
     todoList.splice(indexToRemove, 1);
-    updateCounter();
+    save();
+    setTimeout(()=>{
+        todo.remove();
+        updateCounter(); 
+    },600);  
 }
 
 const clearCompletedButton = document.querySelector('.clear-completed');
@@ -84,9 +133,7 @@ function showActiveTodos() {
 document.querySelector('#show-all').onclick = showAllTodos;
 function showAllTodos() {
     todoList.forEach(todo => {
-        if (todo.dataset.state !== 'active') {
-            todo.style.display = '';
-        }
+        todo.style.display = '';
     });
 }
 
@@ -101,7 +148,29 @@ function showCompletedTodos() {
     });
 }
 
-function updateCounter(){
+function updateCounter() {
     let todosQuantity = todoList.length;
     document.querySelector('.todo-bottom-box span').innerHTML = `${todosQuantity} items left`;
 }
+
+function save() {
+    let objToSave = [...todoList]
+        .map(todo => (
+            {
+                'message': todo.querySelector('span').textContent,
+                'state': todo.dataset.state
+            }
+        ));
+    let stringfy = JSON.stringify(objToSave);
+
+    localStorage.setItem('savedTodo', stringfy);
+}
+
+function retriveData() {
+    JSON.parse(localStorage.getItem('savedTodo'))
+        .reverse()
+        .forEach(elem => createNewTodo(elem.message, elem.state));
+
+    setTimeout(turnOnAnimations, 1000);
+}
+
