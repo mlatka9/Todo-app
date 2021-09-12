@@ -1,6 +1,6 @@
-let todosBox = document.querySelector('.todos ul');
-let form = document.querySelector('.todo-create form');
-let todoList = [];
+const todosBox = document.querySelector('.todos ul');
+const form = document.querySelector('.todo-create form');
+const todoList = [];
 
 retriveData();
 function retriveData() {
@@ -9,6 +9,10 @@ function retriveData() {
         savedData
             .reverse()
             .forEach(elem => createNewTodo(elem.message, elem.state));
+    }
+    let theme = localStorage.getItem('theme');
+    if(theme){
+        setTheme(theme);
     }
     setTimeout(turnOnAnimations, 1000);
 }
@@ -40,12 +44,11 @@ form.addEventListener('submit', function (event) {
 });
 
 function createNewTodo(message, state) {
-
     let li = document.createElement('li');
     li.setAttribute('draggable', 'true');
     li.className = 'task';
     li.dataset.state = state;
-
+    
     let divSwitch = document.createElement('div');
     divSwitch.className = 'state-switch';
     let spanMessage = document.createElement('span');
@@ -170,3 +173,21 @@ function showCompletedTodos() {
         }
     });
 }
+
+document.querySelector('header button').onclick = switchTheme;
+
+function switchTheme(){
+    let currentTheme = document.documentElement.dataset.theme;
+    if(currentTheme === 'dark'){
+        setTheme('light');
+    }
+    else if(currentTheme === 'light'){
+        setTheme('dark');
+    }
+}
+
+function setTheme(theme){
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem('theme',  document.documentElement.dataset.theme);
+}
+
