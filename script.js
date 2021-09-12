@@ -4,7 +4,7 @@ let todoList = [];
 
 retriveData();
 
-function turnOnAnimations(){
+function turnOnAnimations() {
     document.body.classList.remove('no-animation');
 }
 
@@ -66,7 +66,7 @@ function createNewTodo(message, state) {
     divRemove.className = 'remove-task';
 
     li.classList.add('add-animation');
-    setTimeout(()=>li.classList.remove('add-animation'),1000);
+    setTimeout(() => li.classList.remove('add-animation'), 1000);
     li.append(divSwitch, spanMessage, divRemove);
     todoList.unshift(li);
     todosBox.prepend(li);
@@ -100,10 +100,10 @@ function removeTodo(todo) {
     todo.classList.add('remove-amination');
     todoList.splice(indexToRemove, 1);
     save();
-    setTimeout(()=>{
+    setTimeout(() => {
         todo.remove();
-        updateCounter(); 
-    },600);  
+        updateCounter();
+    }, 600);
 }
 
 const clearCompletedButton = document.querySelector('.clear-completed');
@@ -167,9 +167,12 @@ function save() {
 }
 
 function retriveData() {
-    JSON.parse(localStorage.getItem('savedTodo'))
-        .reverse()
-        .forEach(elem => createNewTodo(elem.message, elem.state));
+    let savedData = JSON.parse(localStorage.getItem('savedTodo'));
+    if (savedData) {
+        savedData
+            .reverse()
+            .forEach(elem => createNewTodo(elem.message, elem.state));
+    }
 
     setTimeout(turnOnAnimations, 1000);
 }
