@@ -13,7 +13,9 @@
 }
 
 body {
+    margin-left: calc(100vw - 100%);
     background-color: var(--very-dark-grey);
+    overflow-x: hidden;
 }
 
 .no-animation * {
@@ -22,11 +24,12 @@ body {
 }
 
 .banner {
-    width: 100%;
+    width: 100vw;
     height: 250px;
     background: linear-gradient(0deg, var(--banner-gradient-top) 0%, var(--banner-gradient-bottom) 100%), url('resources/background.png') center no-repeat;
-    background-size: calc(max(1350px, 100vw));
+    background-size: calc(max(1350px, calc(100vw)));
     position: absolute;
+    left: 0;
     z-index: -10;
 }
 
@@ -122,34 +125,13 @@ header i {
     margin-bottom: 1px;
 }
 
-.add-animation{
+.task:hover {
+    background-color: hsl(236, 24%, 23%);
+}
+
+.add-animation {
     animation: add 1s ease-in;
     transform-origin: 50% 0;
-}
-
-.remove-amination {
-    animation: remove 1s ease-in forwards;
-}
-
-@keyframes add {
-    0% {
-        transform: translateX(-100%);
-    }
-    10% {
-        transform: translateX(-100%);
-    }
-    40% {
-        transform: translateX(0);
-    }
-}
-
-@keyframes remove {
-    30% {
-        transform: translateX(101%);
-    }
-    100% {
-        transform: translateX(101%);
-    }
 }
 
 .task span {
@@ -157,6 +139,7 @@ header i {
     width: 80%;
     overflow: hidden;
     line-height: 2.5rem;
+    margin-left: 1rem;
 }
 
 .remove-task, .state-switch, button, header i {
@@ -218,17 +201,42 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 3rem
+    gap: 3rem;
+    margin-bottom: 3rem;
 }
 
 .drag-over {
     background-color: hsl(236, 20%, 16%);
-    ;
+}
+
+.remove-amination {
+    animation: remove 1s ease-in forwards;
+}
+
+@keyframes add {
+    0% {
+        transform: translateX(-100%);
+    }
+    10% {
+        transform: translateX(-100%);
+    }
+    40% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes remove {
+    30% {
+        transform: translateX(101%);
+    }
+    100% {
+        transform: translateX(101%);
+    }
 }
 
 @media (max-width: 500px) {
-    .task, .todo-create, .todo-bottom-box {
-        padding: 1rem;
+    :root {
+        margin-left: 0;
     }
     .task span {
         font-size: 1.5rem;
@@ -239,5 +247,9 @@ footer {
     }
     header, footer {
         overflow: hidden;
+    }
+    .main-container {
+        width: 90%;
+        gap: 5rem;
     }
 }

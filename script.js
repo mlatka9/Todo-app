@@ -3,42 +3,30 @@ let form = document.querySelector('.todo-create form');
 let todoList = [];
 
 retriveData();
+function retriveData() {
+    let savedData = JSON.parse(localStorage.getItem('savedTodo'));
+    if (savedData) {
+        savedData
+            .reverse()
+            .forEach(elem => createNewTodo(elem.message, elem.state));
+    }
+    setTimeout(turnOnAnimations, 1000);
+}
+
+function saveData() {
+    let objToSave = [...todoList]
+        .map(todo => (
+            {
+                'message': todo.querySelector('span').textContent,
+                'state': todo.dataset.state
+            }
+        ));
+    let stringfy = JSON.stringify(objToSave);
+    localStorage.setItem('savedTodo', stringfy);
+}
 
 function turnOnAnimations() {
     document.body.classList.remove('no-animation');
-}
-
-let draggableIndex;
-function makeDraggable(dragItem) {
-
-    dragItem.ondragstart = function () {
-        draggableIndex = todoList.indexOf(this);
-    }
-
-    dragItem.ondragenter = function () {
-        this.classList.add('drag-over');
-    }
-
-    dragItem.ondragleave = function (event) {
-        if (event.relatedTarget === null) {
-            this.classList.remove('drag-over');
-            return;
-        }
-        if (event.relatedTarget.closest('li') === this) return;
-        this.classList.remove('drag-over');
-    }
-
-    dragItem.ondragover = function (event) {
-        event.preventDefault();
-    }
-
-    dragItem.ondrop = function () {
-        this.classList.remove('drag-over');
-        let droppableIndex = todoList.indexOf(this);
-        [todoList[droppableIndex], todoList[draggableIndex]] = [todoList[draggableIndex], todoList[droppableIndex]]
-        todosBox.append(...todoList);
-        save()
-    }
 }
 
 form.addEventListener('submit', function (event) {
@@ -73,7 +61,45 @@ function createNewTodo(message, state) {
 
     makeDraggable(li);
     updateCounter();
-    save();
+    saveData();
+}
+
+let draggableIndex;
+function makeDraggable(dragItem) {
+
+    dragItem.ondragstart = function () {
+        draggableIndex = todoList.indexOf(this);
+    }
+
+    dragItem.ondragenter = function () {
+        this.classList.add('drag-over');
+    }
+
+    dragItem.ondragleave = function (event) {
+        if (event.relatedTarget === null) {
+            this.classList.remove('drag-over');
+            return;
+        }
+        if (event.relatedTarget.closest('li') === this) return;
+        this.classList.remove('drag-over');
+    }
+
+    dragItem.ondragover = function (event) {
+        event.preventDefault();
+    }
+
+    dragItem.ondrop = function () {
+        this.classList.remove('drag-over');
+        let droppableIndex = todoList.indexOf(this);
+        [todoList[droppableIndex], todoList[draggableIndex]] = [todoList[draggableIndex], todoList[droppableIndex]];
+        todosBox.append(...todoList);
+        saveData();
+    }
+}
+
+function updateCounter() {
+    let todosQuantity = todoList.length;
+    document.querySelector('.todo-bottom-box span').innerHTML = `${todosQuantity} items left`;
 }
 
 todosBox.addEventListener('click', function (event) {
@@ -91,24 +117,21 @@ function changeState(todo) {
     } else {
         todo.dataset.state = 'active';
     }
-    save();
+    saveData();
 }
 
 function removeTodo(todo) {
     let indexToRemove = todoList.indexOf(todo);
-    console.log(todo)
-    todo.classList.add('remove-amination');
     todoList.splice(indexToRemove, 1);
-    save();
+    saveData();
+    todo.classList.add('remove-amination');
     setTimeout(() => {
         todo.remove();
         updateCounter();
     }, 600);
 }
 
-const clearCompletedButton = document.querySelector('.clear-completed');
-clearCompletedButton.onclick = clearAllCompleted;
-
+document.querySelector('.clear-completed').onclick = clearAllCompleted;
 function clearAllCompleted() {
     let toRemove = [];
     todoList.forEach(todo => {
@@ -147,33 +170,3 @@ function showCompletedTodos() {
         }
     });
 }
-
-function updateCounter() {
-    let todosQuantity = todoList.length;
-    document.querySelector('.todo-bottom-box span').innerHTML = `${todosQuantity} items left`;
-}
-
-function save() {
-    let objToSave = [...todoList]
-        .map(todo => (
-            {
-                'message': todo.querySelector('span').textContent,
-                'state': todo.dataset.state
-            }
-        ));
-    let stringfy = JSON.stringify(objToSave);
-
-    localStorage.setItem('savedTodo', stringfy);
-}
-
-function retriveData() {
-    let savedData = JSON.parse(localStorage.getItem('savedTodo'));
-    if (savedData) {
-        savedData
-            .reverse()
-            .forEach(elem => createNewTodo(elem.message, elem.state));
-    }
-
-    setTimeout(turnOnAnimations, 1000);
-}
-
