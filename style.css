@@ -280,6 +280,6 @@ footer {
     }
     .main-container {
         width: 90%;
-        gap: 5rem;
+        /* gap: 5rem; */
     }
 }
